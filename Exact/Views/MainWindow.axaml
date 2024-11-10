@@ -1,0 +1,145 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Exact.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Exact.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Exact">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="40, *, 40" ShowGridLines="true">
+        <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Menu DockPanel.Dock="Top" >
+                <MenuItem Header="_Operazioni">
+                    <MenuItem Header="_Importazione">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource Import}"  />
+                        </MenuItem.Icon>
+                        <MenuItem Header="_Automatica" Command="{Binding AutoImportCommand}">
+                            <MenuItem.Icon>
+                                <PathIcon Data="{StaticResource ImportFromField}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Da foglio Excel" Command="{Binding ImportFromFileCommand}">
+                            <MenuItem.Icon>
+                                <PathIcon Data="{StaticResource ImportFromFile}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="_Esportazione" Command="{Binding ExportDataCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource Export}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Validazione" Command="{Binding ValidateReadingsCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource CheckCircle}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Charts">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource BarChart}"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="_Setup" Command="{Binding ChartSetupCommand}">
+                            <MenuItem.Icon>
+                                <PathIcon Data="{StaticResource ChartBoxPlusOutline}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Show" Command="{Binding ChartShowCommand}">
+                            <MenuItem.Icon>
+                                <PathIcon Data="{StaticResource PresentationChart}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Report">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource ChartBoxMultipleOutline}"></PathIcon>
+                        </MenuItem.Icon>
+                        <MenuItem Header="_Tabulari" Command="{Binding TabReportCommand}">
+                            <MenuItem.Icon>
+                                <PathIcon Data="{StaticResource FileText}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Grafici" Command="{Binding ChartReportCommand}">
+                            <MenuItem.Icon>
+                                <PathIcon Data="{StaticResource ChartBoxOutline}"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Esci" Command="{Binding ApplicationExitCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource Exit}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Tabelle">
+                    <MenuItem Header="_Regioni" Command="{Binding EditMapCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource MapOutline}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Impianti" Command="{Binding EditPlantsCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource FactoryOutline}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Journal" Command="{Binding EditJournalCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource Journal}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Strumenti installati" Command="{Binding EditGaugesCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource GaugeEmpty}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Letture" Command="{Binding EditReadingsCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource Gauge}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Personale" Command="{Binding EditEmployeesCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource PeopleRound}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <ComboBox DockPanel.Dock="Top" Margin="40 0 0 0" Width="250" PlaceholderText="Select Region first" PlaceholderForeground="Gray"/>
+                <ComboBox DockPanel.Dock="Top" Width="250" PlaceholderText="Then select Plant" PlaceholderForeground="Gray"/>
+                <ComboBox DockPanel.Dock="Top" Width="250" PlaceholderText="Then instrument family" PlaceholderForeground="Gray"/>
+                <ComboBox DockPanel.Dock="Top" Width="250" PlaceholderText="Instrument type last" PlaceholderForeground="Gray"/>
+            </Menu>
+        </DockPanel>
+        <Panel Grid.Row="1" Background="AntiqueWhite">
+            <ContentPresenter x:Name="ControlsPresenter"/>
+        </Panel>
+        <DockPanel Grid.Row="2" >
+            <StackPanel Orientation="Horizontal">
+                <PathIcon DockPanel.Dock="Left" Margin="5 0 5 0" Data="{StaticResource IdentificationBadgeLight}" VerticalAlignment="Center"/>
+                <TextBlock x:Name="UserText" Text="Ermenegildo" VerticalAlignment="Center" Margin="3 0 50 0"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <PathIcon DockPanel.Dock="Right" Margin="5 0 5 0" Data="{StaticResource BracketsAngle}" VerticalAlignment="Center"/>
+                <TextBlock x:Name="CurrentCode" Text="X.XX.XXX.XXX" Width="110" VerticalAlignment="Center" Margin="3"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <PathIcon x:Name="InfoIcon" DockPanel.Dock="Right" Margin="5 0 5 0" Data="{StaticResource InfoCircled}" VerticalAlignment="Center"/>
+                <TextBlock x:Name="ApplicationInfo" Text="Messaggio da visualizzare all'utente" VerticalAlignment="Center" Margin="3"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+
+</Window>
